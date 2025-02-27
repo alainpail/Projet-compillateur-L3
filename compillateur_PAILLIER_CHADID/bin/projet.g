@@ -146,11 +146,11 @@ effmods :'(' (ident  (',' ident  )*)? ')'
 expression: (exp1) ('ou'  exp1  )*
   ;
   
-exp1  : exp2 ('et'  exp2  )*
+exp1  : exp2 {PtGen.pt(16)} ('et'  exp2 {PtGen.pt(16)} )* 
   ;
   
 exp2  : 'non' exp2 {PtGen.pt(16)}
-  | exp3  
+  | exp3 {PtGen.pt(16)}
   ;
   
 exp3  : exp4 {PtGen.pt(15)}
