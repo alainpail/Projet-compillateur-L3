@@ -117,7 +117,7 @@ public class PtGen {
     // -------------------------
     
  // MERCI de renseigner ici un nom pour le trinome, constitue EXCLUSIVEMENT DE LETTRES
-    public static String trinome="PAILLIER Alan et CHADID Hafsa"; 	//TODO 
+    public static String trinome="PAILLIER Alan et CHAHID Hafsa"; 	//TODO 
     
     private static int tCour; // type de l'expression compilee
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
@@ -295,7 +295,15 @@ public class PtGen {
 			po.produire(NON);
 			break;
 		case 20:
-			
+			int tmp=presentIdent(1);
+			if(tabSymb[tmp].categorie==CONSTANTE){
+				UtilLex.messErr("une constante ne pas être modifier");
+			}else if(tabSymb[tmp].type == ENT ){
+				po.produire(LIRENT);		
+			}else {
+				po.produire(LIREBOOL);
+			}
+			po.produire(tmp);
 			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
