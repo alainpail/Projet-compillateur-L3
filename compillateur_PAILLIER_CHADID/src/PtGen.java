@@ -285,6 +285,18 @@ public class PtGen {
 		case 16:
 			verifBool();
 			break;
+		case 17:
+			po.produire(OU);
+			break;
+		case 18:
+			po.produire(ET);
+			break;
+		case 19:
+			po.produire(NON);
+			break;
+		case 20:
+			
+			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
