@@ -305,6 +305,15 @@ public class PtGen {
 			}
 			po.produire(tmp);
 			break;
+		case 21:
+			if(tCour == ENT){
+				po.produire(ECRENT);
+				
+			}else{
+				po.produire(ECRBOOL);
+			}
+			po.produire(vCour);
+			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

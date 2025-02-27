@@ -125,10 +125,10 @@ inscond : 'cond'  expression  ':' instructions
 boucle  : 'ttq'  expression 'faire' instructions 'fait' 
   ;
   
-lecture: 'lire' '(' ident {PtGen.pt(20)}  ( ',' ident  {PtGen.pt(30)})* ')' 
+lecture: 'lire' '(' ident {PtGen.pt(20);}  ( ',' ident  {PtGen.pt(20)};)* ')' 
   ;
   
-ecriture: 'ecrire' '(' expression  ( ',' expression  )* ')'
+ecriture: 'ecrire' '(' expression {PtGen.pt(21);} ( ',' expression {PtGen.pt(21);} )* ')'
    ;
   
 affouappel
@@ -143,35 +143,35 @@ effixes : '(' (expression  (',' expression  )*)? ')'
 effmods :'(' (ident  (',' ident  )*)? ')'
   ; 
   
-expression: (exp1) ({PtGen.pt(16)}'ou'  exp1{PtGen.pt(16)} {PtGen.pt(17)}  )*
+expression: (exp1) ({PtGen.pt(16);}'ou'  exp1{PtGen.pt(16);} {PtGen.pt(17);}  )*
   ;
   
-exp1  : exp2  ({PtGen.pt(16)}'et'  exp2 {PtGen.pt(16)} {PtGen.pt(18)})* 
+exp1  : exp2  ({PtGen.pt(16);}'et'  exp2 {PtGen.pt(16);} {PtGen.pt(18);})* 
   ;
   
-exp2  : 'non' exp2 {PtGen.pt(16)} {PtGen.pt(19)}
+exp2  : 'non' exp2 {PtGen.pt(16;)} {PtGen.pt(19);}
   | exp3
   ;
   
 exp3  : exp4 
-  ({PtGen.pt(15)} '='   exp4 {PtGen.pt(15)} {PtGen.pt(9)}
-  |{PtGen.pt(15)} '<>'  exp4 {PtGen.pt(15)} {PtGen.pt(10)}
-  |{PtGen.pt(15)} '>'   exp4 {PtGen.pt(15)} {PtGen.pt(11)}
-  |{PtGen.pt(15)} '>='  exp4 {PtGen.pt(15)} {PtGen.pt(12)}
-  |{PtGen.pt(15)} '<'   exp4 {PtGen.pt(15)} {PtGen.pt(13)}
-  |{PtGen.pt(15)} '<='  exp4 {PtGen.pt(15)} {PtGen.pt(14)}
+  ({PtGen.pt(15);} '='   exp4 {PtGen.pt(15);} {PtGen.pt(9);}
+  |{PtGen.pt(15);} '<>'  exp4 {PtGen.pt(15);} {PtGen.pt(10);}
+  |{PtGen.pt(15);} '>'   exp4 {PtGen.pt(15);} {PtGen.pt(11);}
+  |{PtGen.pt(15);} '>='  exp4 {PtGen.pt(15);} {PtGen.pt(12);}
+  |{PtGen.pt(15);} '<'   exp4 {PtGen.pt(15);} {PtGen.pt(13);}
+  |{PtGen.pt(15);} '<='  exp4 {PtGen.pt(15);} {PtGen.pt(14);}
   ) ?
   ;
   
 exp4  : exp5 
-        ({PtGen.pt(15)} '+'  exp5 {PtGen.pt(15)} {PtGen.pt(5);}
-        |{PtGen.pt(15)} '-'  exp5 {PtGen.pt(15)} {PtGen.pt(6);}
+        ({PtGen.pt(15);} '+'  exp5 {PtGen.pt(15);} {PtGen.pt(5);}
+        |{PtGen.pt(15);} '-'  exp5 {PtGen.pt(15);} {PtGen.pt(6);}
         )* 
   ;
   
 exp5  : primaire 
-        (  {PtGen.pt(15)}  '*'   primaire {PtGen.pt(15)} {PtGen.pt(7);}
-          |{PtGen.pt(15)} 'div'  primaire {PtGen.pt(15)} {PtGen.pt(8);}
+        (  {PtGen.pt(15);}  '*'   primaire {PtGen.pt(15);} {PtGen.pt(7);}
+          |{PtGen.pt(15);} 'div'  primaire {PtGen.pt(15);} {PtGen.pt(8);}
         )*
   ;
   
