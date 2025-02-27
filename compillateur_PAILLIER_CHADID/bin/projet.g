@@ -149,17 +149,17 @@ expression: (exp1) ('ou'  exp1  )*
 exp1  : exp2 ('et'  exp2  )*
   ;
   
-exp2  : 'non' exp2 
+exp2  : 'non' exp2 {PtGen.pt(16)}
   | exp3  
   ;
   
-exp3  : exp4 
-  ( '='   exp4 
-  | '<>'  exp4 
-  | '>'   exp4 
-  | '>='  exp4 
-  | '<'   exp4 
-  | '<='  exp4  
+exp3  : exp4 {PtGen.pt(15)}
+  ( '='   exp4 {PtGen.pt(15)} {PtGen.pt(9)}
+  | '<>'  exp4 {PtGen.pt(15)} {PtGen.pt(10)}
+  | '>'   exp4 {PtGen.pt(15)} {PtGen.pt(11)}
+  | '>='  exp4 {PtGen.pt(15)} {PtGen.pt(12)}
+  | '<'   exp4 {PtGen.pt(15)} {PtGen.pt(13)}
+  | '<='  exp4 {PtGen.pt(15)} {PtGen.pt(14)}
   ) ?
   ;
   

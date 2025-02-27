@@ -241,17 +241,50 @@ public class PtGen {
 			break;
 		case 5:
 			po.produire(ADD);
+			tCour=BOOL;//typecourant devient bool
 			break;
 		case 6:
 			po.produire(SOUS);
+			tCour=BOOL;//typecourant devient bool
 			break;
 		case 7:
 			po.produire(MUL);
+			tCour=BOOL;//typecourant devient bool
 			break;
 		case 8:
 			po.produire(DIV);
+			tCour=BOOL;//typecourant devient bool
 			break;
-
+		case 9:
+			po.produire(EG);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 10:
+			po.produire(DIFF);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 11:
+			po.produire(SUP);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 12:
+			po.produire(SUPEG);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 13:
+			po.produire(INF);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 14:
+			po.produire(INFEG);
+			tCour=BOOL;//typecourant devient bool
+			break;
+		case 15:
+			verifEnt();
+			break;
+		case 16:
+			verifBool();
+			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
