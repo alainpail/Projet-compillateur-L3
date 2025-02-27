@@ -225,9 +225,33 @@ public class PtGen {
 		case 0:
 			initialisations();
 			break;
-		
-		// TODO
+		case 1:
+			po.produire(EMPILER);
+			po.produire(UtilLex.valEnt);
+			break;
+		case 2:
+
+			break;
+		case 3:
 			
+			break;
+		case 4:
+			po.produire(CONTENUG);
+			po.produire(numGen);
+			break;
+		case 5:
+			po.produire(ADD);
+			break;
+		case 6:
+			po.produire(SOUS);
+			break;
+		case 7:
+			po.produire(MUL);
+			break;
+		case 8:
+			po.produire(DIV);
+			break;
+
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

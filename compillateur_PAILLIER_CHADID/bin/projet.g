@@ -67,7 +67,7 @@ specif  : ident  ( 'fixe' '(' type  ( ',' type  )* ')' )?
 consts  : 'const' ( ident  '=' valeur  ptvg  )+ 
   ;
   
-vars  : 'var' ( type ident  ( ','  ident  )* ptvg  )+
+vars  : 'var' ( type ident ( ','  ident  )* ptvg  )+
   ;
   
 type  : 'ent'  
@@ -164,25 +164,25 @@ exp3  : exp4
   ;
   
 exp4  : exp5 
-        ('+'  exp5 
-        |'-'  exp5 
+        ('+'  exp5 {PtGen.pt(5);}
+        |'-'  exp5 {PtGen.pt(6);}
         )*
   ;
   
 exp5  : primaire 
-        (    '*'   primaire 
-          | 'div'  primaire 
+        (    '*'   primaire {PtGen.pt(7);}
+          | 'div'  primaire {PtGen.pt(8);}
         )*
   ;
   
-primaire: valeur 
-  | ident  
+primaire: valeur {PtGen.pt(1);}
+  | ident {PtGen.pt(4);}
   | '(' expression ')'
   ;
   
 valeur  : nbentier 
-  | '+' nbentier 
-  | '-' nbentier 
+  | '+' nbentier {PtGen.pt(2);}
+  | '-' nbentier {PtGen.pt(3);}
   | 'vrai' 
   | 'faux' 
   ;
