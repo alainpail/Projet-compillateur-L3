@@ -295,10 +295,11 @@ public class PtGen {
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
 			}else if(tabSymb[tmp].type == ENT ){
-				po.produire(LIRENT);		
+				po.produire(LIRENT);
 			}else {
 				po.produire(LIREBOOL);
 			}
+			po.produire(AFFECTERG);
 			po.produire(tmp);
 			break;
 		case 21:
@@ -326,10 +327,16 @@ public class PtGen {
 			}
 			break;
 		case 24:
-
+			po.produire(RESERVER);
+			po.produire(inddervars+1);
 			break;
 		//gestion du si [] alors [] sinon [] fsi
-
+		case 25:
+			break;
+		case 26://bsifaux	
+			break;
+		case 27://bincond
+			break;
 		//gestion du ttq [] faire [] fait
 
 

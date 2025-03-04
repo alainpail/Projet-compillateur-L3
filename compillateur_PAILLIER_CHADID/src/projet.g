@@ -70,8 +70,8 @@ consts  : 'const' ( ident  '=' valeur {PtGen.pt(22);} ptvg  )+
 vars  : 'var' ( type ident {PtGen.pt(23);} ( ','  ident {PtGen.pt(23);}  )* ptvg {PtGen.pt(24);} )+
   ;
   
-type  : 'ent'  {PtGen.pt(23);}
-  |     'bool' {PtGen.pt(24);}
+type  : 'ent'  {PtGen.pt(2);}
+  |     'bool' {PtGen.pt(3);}
   ;
   
 decprocs: (decproc ptvg)+
