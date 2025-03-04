@@ -62,7 +62,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-
+	private static int indicedernier;
     // utilitaires de controle de type
     // -------------------------------
     /**
@@ -210,7 +210,7 @@ public class PtGen {
 		// initialisation du type de l'expression courante
 		tCour = NEUTRE;
 
-		//TODO si necessaire
+		indicedernier =0;
 
 	} // initialisations
 
@@ -314,7 +314,7 @@ public class PtGen {
 			po.produire(vCour);
 			break;
 		case 22://gestion des constantes
-
+			
 			break;
 		case 23://gestion des variables
 			
