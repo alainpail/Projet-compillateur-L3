@@ -241,19 +241,15 @@ public class PtGen {
 			break;
 		case 5:
 			po.produire(ADD);
-			tCour=BOOL;//typecourant devient bool
 			break;
 		case 6:
 			po.produire(SOUS);
-			tCour=BOOL;//typecourant devient bool
 			break;
 		case 7:
 			po.produire(MUL);
-			tCour=BOOL;//typecourant devient bool
 			break;
 		case 8:
 			po.produire(DIV);
-			tCour=BOOL;//typecourant devient bool
 			break;
 		case 9:
 			po.produire(EG);
@@ -314,7 +310,11 @@ public class PtGen {
 			po.produire(vCour);
 			break;
 		case 22://gestion des constantes
-			
+			if(presentIdent(1)!=0){
+				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
+			}else{
+				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
+			}
 			break;
 		case 23://gestion des variables
 			
