@@ -308,11 +308,19 @@ public class PtGen {
 		case 21:
 			if(tCour == ENT){
 				po.produire(ECRENT);
-				
 			}else{
 				po.produire(ECRBOOL);
 			}
 			po.produire(vCour);
+			break;
+		case 22://gestion des constantes
+
+			break;
+		case 23://gestion des variables
+			
+			break;
+		case 24:
+
 			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
