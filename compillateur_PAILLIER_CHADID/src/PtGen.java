@@ -336,25 +336,27 @@ public class PtGen {
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
 			break;
-		case 26://bsifaux
+		case 26://bsifaux de inssi
 			po.modifier(pileRep.depiler(), po.getIpo()+3);
 			po.produire(BINCOND);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
 			break;
-		case 27://bincond
+		case 27://bincond de inssi
 			po.modifier(pileRep.depiler(),po.getIpo()+1);
 			break;
 		case 28://gestion du ttq [] faire [] fait
 			pileRep.empiler(po.getIpo());
-			po.produire(BSIFAUX);
-			po.produire(-1);
 			break;
 		case 29:
 			pileRep.empiler(po.getIpo());
-			po.produire(BINCOND);
+			po.produire(BSIFAUX);
 			po.produire(-1);
-		break;
+			break;
+		case 30:
+			po.modifier(pileRep.depiler(),po.getIpo()+1);
+			po.produire(BINCOND);
+			po.produire(pileRep.depiler());
 		//gestion du cond
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
