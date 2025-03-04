@@ -316,12 +316,23 @@ public class PtGen {
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
 			}
 			break;
-		case 23://gestion des variables
-			
-			break;
+		case 23:
+			tCour = ENT;
+			break;		
 		case 24:
-
+			tCour = BOOL;
 			break;
+		
+		//gestion du si [] alors [] sinon [] fsi
+
+		//gestion du ttq [] faire [] fait
+
+
+		//gestion du cond
+
+
+
+
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

@@ -64,14 +64,14 @@ specif  : ident  ( 'fixe' '(' type  ( ',' type  )* ')' )?
                  ( 'mod'  '(' type  ( ',' type  )* ')' )? 
   ;
   
-consts  : 'const' ( ident  '=' valeur  ptvg  )+ 
+consts  : 'const' ( ident  '=' valeur {PtGen.pt(22);} ptvg  )+ 
   ;
   
 vars  : 'var' ( type ident ( ','  ident  )* ptvg  )+
   ;
   
-type  : 'ent'  
-  |     'bool' 
+type  : 'ent'  {PtGen.pt(23);}
+  |     'bool' {PtGen.pt(24);}
   ;
   
 decprocs: (decproc ptvg)+
