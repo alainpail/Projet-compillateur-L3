@@ -63,6 +63,7 @@ public class PtGen {
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
 	private static int inddervars;
+
     // utilitaires de controle de type
     // -------------------------------
     /**
@@ -237,60 +238,60 @@ public class PtGen {
 			break;
 		case 4:
 			po.produire(CONTENUG);
-			po.produire(numGen);
+			po.produire(presentIdent(1));
 			break;
-		case 5:
+		case 5://gestion de l'addition
 			po.produire(ADD);
 			break;
-		case 6:
+		case 6://gestion de la soustraction
 			po.produire(SOUS);
 			break;
-		case 7:
+		case 7://gestion de la Multiplication
 			po.produire(MUL);
 			break;
-		case 8:
+		case 8://gestion de la division
 			po.produire(DIV);
 			break;
-		case 9:
+		case 9://gestion du =
 			po.produire(EG);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 10:
+		case 10://gestion du <>
 			po.produire(DIFF);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 11:
+		case 11://gestion du >
 			po.produire(SUP);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 12:
+		case 12://gestion du >=
 			po.produire(SUPEG);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 13:
+		case 13://gestion du <
 			po.produire(INF);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 14:
+		case 14://gestion du <= 
 			po.produire(INFEG);
 			tCour=BOOL;//typecourant devient bool
 			break;
-		case 15:
+		case 15://verification d'un entier
 			verifEnt();
 			break;
-		case 16:
+		case 16://verification d'un boolean
 			verifBool();
 			break;
-		case 17:
+		case 17://gestion du OU
 			po.produire(OU);
 			break;
-		case 18:
+		case 18://gestion du ET
 			po.produire(ET);
 			break;
-		case 19:
+		case 19://gestion du NON
 			po.produire(NON);
 			break;
-		case 20:
+		case 20://gestion de lecture
 			int tmp=presentIdent(1);
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
@@ -302,7 +303,7 @@ public class PtGen {
 			po.produire(AFFECTERG);
 			po.produire(tmp);
 			break;
-		case 21:
+		case 21://gestion de ecriture
 			if(tCour == ENT){
 				po.produire(ECRENT);
 			}else{
@@ -330,12 +331,19 @@ public class PtGen {
 			po.produire(RESERVER);
 			po.produire(inddervars+1);
 			break;
-		//gestion du si [] alors [] sinon [] fsi
-		case 25:
+		case 25://gestion du si [] alors [] sinon [] fsi
+			po.produire(BSIFAUX);
+			po.produire(-1);
+			pileRep.empiler(po.getIpo());
 			break;
-		case 26://bsifaux	
+		case 26://bsifaux
+			po.modifier(pileRep.depiler(), po.getIpo());
+			po.produire(BINCOND);
+			po.produire(-1);
+			pileRep.empiler(po.getIpo());
 			break;
 		case 27://bincond
+			po.modifier(pileRep.depiler(),po.getIpo());
 			break;
 		//gestion du ttq [] faire [] fait
 
