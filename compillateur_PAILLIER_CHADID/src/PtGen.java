@@ -62,7 +62,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int indicedernier;
+	private static int inddervars;
     // utilitaires de controle de type
     // -------------------------------
     /**
@@ -210,7 +210,7 @@ public class PtGen {
 		// initialisation du type de l'expression courante
 		tCour = NEUTRE;
 
-		indicedernier =0;
+		inddervars =0;
 
 	} // initialisations
 
@@ -230,10 +230,10 @@ public class PtGen {
 			po.produire(UtilLex.valEnt);
 			break;
 		case 2:
-
-			break;
+			tCour = ENT;
+			break;		
 		case 3:
-			
+			tCour = BOOL;
 			break;
 		case 4:
 			po.produire(CONTENUG);
@@ -313,16 +313,21 @@ public class PtGen {
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
+				
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
 			}
 			break;
 		case 23:
-			tCour = ENT;
-			break;		
-		case 24:
-			tCour = BOOL;
+			if(presentIdent(1)!=0){
+				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
+			}else{
+				placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, inddervars);
+				inddervars ++;
+			}
 			break;
-		
+		case 24:
+
+			break;
 		//gestion du si [] alors [] sinon [] fsi
 
 		//gestion du ttq [] faire [] fait
