@@ -349,15 +349,13 @@ public class PtGen {
 			pileRep.empiler(po.getIpo());
 			break;
 		case 29:
-			pileRep.empiler(po.getIpo());
-			po.produire(BSIFAUX);
-			po.produire(-1);
-			break;
-		case 30:
 			po.modifier(pileRep.depiler(),po.getIpo()+1);
 			po.produire(BINCOND);
 			po.produire(pileRep.depiler());
 		//gestion du cond
+		case 30:
+			po.produire(BINCOND);
+			po.produire(-1);
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

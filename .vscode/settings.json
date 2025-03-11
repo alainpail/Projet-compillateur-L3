@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "compillateur_PAILLIER_CHADID\\src"
+    ],
+    "java.project.referencedLibraries": [
+        "compillateur_PAILLIER_CHADID\\lib\\antlr-3.5.2-complete.jar",
+        "compillateur_PAILLIER_CHADID\\lib\\libClass_Projet.jar"
+    ]
+}
