@@ -122,10 +122,10 @@ inscond : 'cond'   expression {PtGen.pt(16);} {PtGen.pt(25);} ':' instructions
           'fcond' {PtGen.pt(27);}
   ;
   
-boucle  : 'ttq' {PtGen.pt(28);}  expression {PtGen.pt(16);} {PtGen.pt(25)}'faire' instructions 'fait' {PtGen.pt(29)}
+boucle  : 'ttq' {PtGen.pt(28);}  expression {PtGen.pt(16);} {PtGen.pt(25);}'faire' instructions 'fait' {PtGen.pt(29);}
   ;
   
-lecture: 'lire' '(' ident {PtGen.pt(20);}  ( ',' ident  {PtGen.pt(20)};)* ')' 
+lecture: 'lire' '(' ident {PtGen.pt(20);}  ( ',' ident  {PtGen.pt(20);})* ')' 
   ;
   
 ecriture: 'ecrire' '(' expression {PtGen.pt(21);} ( ',' expression {PtGen.pt(21);} )* ')'
@@ -149,7 +149,7 @@ expression: (exp1) ({PtGen.pt(16);}'ou'  exp1{PtGen.pt(16);} {PtGen.pt(17);}  )*
 exp1  : exp2  ({PtGen.pt(16);}'et'  exp2 {PtGen.pt(16);} {PtGen.pt(18);})* 
   ;
   
-exp2  : 'non' exp2 {PtGen.pt(16;)} {PtGen.pt(19);}
+exp2  : 'non' exp2 {PtGen.pt(16);} {PtGen.pt(19);}
   | exp3
   ;
   
