@@ -306,10 +306,9 @@ public class PtGen {
 				po.produire(LIREBOOL);
 			}
 			po.produire(AFFECTERG);
-			po.produire(tmp);
+			po.produire(tabSymb[tmp].info);
 			break;
 		case 21://gestion de ecriture
-			po.produire(vCour);
 			if(tCour == ENT){
 				po.produire(ECRENT);
 			}else{
@@ -333,7 +332,7 @@ public class PtGen {
 			break;
 		case 24:
 			po.produire(RESERVER);
-			po.produire(inddervars+1);
+			po.produire(inddervars);
 			break;
 		case 25://gestion du si [] alors [] sinon [] fsi
 			po.produire(BSIFAUX);
