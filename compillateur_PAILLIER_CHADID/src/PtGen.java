@@ -221,14 +221,14 @@ public class PtGen {
 	 * @param numGen : numero du point de generation a executer
 	 */
 	public static void pt(int numGen) {
-	
+		int tmp;
 		switch (numGen) {
 		case 0:
 			initialisations();
 			break;
 		case 1:
 			po.produire(EMPILER);
-			po.produire(UtilLex.valEnt);
+			po.produire(vCour);
 			break;
 		case 2:
 			tCour = ENT;
@@ -237,8 +237,13 @@ public class PtGen {
 			tCour = BOOL;
 			break;
 		case 4:
-			po.produire(CONTENUG);
-			po.produire(presentIdent(1));
+			tmp=presentIdent(1);
+			if(tabSymb[tmp].categorie==CONSTANTE){
+				po.produire(EMPILER);
+			}else {
+				po.produire(CONTENUG);
+			}		
+			po.produire(tabSymb[tmp].info);
 			break;
 		case 5://gestion de l'addition
 			po.produire(ADD);
@@ -292,7 +297,7 @@ public class PtGen {
 			po.produire(NON);
 			break;
 		case 20://gestion de lecture
-			int tmp=presentIdent(1);
+			tmp=presentIdent(1);
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
 			}else if(tabSymb[tmp].type == ENT ){
@@ -304,18 +309,17 @@ public class PtGen {
 			po.produire(tmp);
 			break;
 		case 21://gestion de ecriture
+			po.produire(vCour);
 			if(tCour == ENT){
 				po.produire(ECRENT);
 			}else{
 				po.produire(ECRBOOL);
 			}
-			po.produire(vCour);
 			break;
 		case 22://gestion des constantes
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
-				
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
 			}
 			break;
@@ -349,19 +353,28 @@ public class PtGen {
 			pileRep.empiler(po.getIpo());
 			break;
 		case 29:
-			po.modifier(pileRep.depiler(),po.getIpo()+1);
+			po.modifier(pileRep.depiler(),po.getIpo() + 3);
 			po.produire(BINCOND);
 			po.produire(pileRep.depiler());
 			break;
 		//gestion du cond
 		case 30:
+			po.produire(BSIFAUX);
+			po.produire(-1);
+			pileRep.empiler(po.getIpo());
+			break;
+		case 31:
 			po.modifier(pileRep.depiler(), po.getIpo()+3);
+			po.produire(BINCOND);
+			po.produire(-1);
+			pileRep.empiler(po.getIpo());
+			break;
+		case 32:
+			po.modifier(pileRep.depiler(), po.getIpo()+1);
 			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
-
-		
 		default:
 			System.out.println("Point de generation non prevu dans votre liste");
 			break;

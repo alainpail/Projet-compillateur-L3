@@ -116,10 +116,10 @@ instruction
 inssi : 'si' expression {PtGen.pt(16);} {PtGen.pt(25);} 'alors' instructions ('sinon' {PtGen.pt(26);} instructions)? 'fsi'{PtGen.pt(27);} 
   ;
   
-inscond : 'cond'   expression {PtGen.pt(16);} {PtGen.pt(25);} ':' instructions 
-          (',' {PtGen.pt(26);} expression {PtGen.pt(16);}{PtGen.pt(25);} ':' instructions {PtGen.pt(30);} )* 
-          ('aut'   instructions |  ) 
-          'fcond' {PtGen.pt(27);}
+inscond : 'cond'   expression {PtGen.pt(16);} {PtGen.pt(30);} ':' instructions 
+          (',' {PtGen.pt(31);} expression {PtGen.pt(16);}{PtGen.pt(30);} ':' instructions )* 
+          ('aut' {PtGen.pt(32);}  instructions |  ) 
+          'fcond' {PtGen.pt(32);}
   ;
   
 boucle  : 'ttq' {PtGen.pt(28);}  expression {PtGen.pt(16);} {PtGen.pt(25);}'faire' instructions 'fait' {PtGen.pt(29);}
@@ -164,18 +164,18 @@ exp3  : exp4
   ;
   
 exp4  : exp5 
-        ({PtGen.pt(15);} {PtGen.pt(1);} '+'  exp5 {PtGen.pt(15);} {PtGen.pt(5);}
-        |{PtGen.pt(15);} {PtGen.pt(1);} '-'  exp5 {PtGen.pt(15);} {PtGen.pt(6);}
+        ({PtGen.pt(15);} '+'  exp5 {PtGen.pt(15);} {PtGen.pt(5);}
+        |{PtGen.pt(15);} '-'  exp5 {PtGen.pt(15);} {PtGen.pt(6);}
         )* 
   ;
   
 exp5  : primaire 
-        (  {PtGen.pt(15);} {PtGen.pt(1);}  '*'   primaire {PtGen.pt(15);} {PtGen.pt(7);}
-          |{PtGen.pt(15);} {PtGen.pt(1);} 'div'  primaire {PtGen.pt(15);} {PtGen.pt(8);}
+        (  {PtGen.pt(15);}  '*'   primaire {PtGen.pt(15);} {PtGen.pt(7);}
+          |{PtGen.pt(15);} 'div'  primaire {PtGen.pt(15);} {PtGen.pt(8);}
         )*
   ;
   
-primaire: valeur 
+primaire: valeur {PtGen.pt(1);}
   | ident {PtGen.pt(4);}
   | '(' expression ')'
   ;

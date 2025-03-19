@@ -64,14 +64,14 @@ specif  : ident  ( 'fixe' '(' type  ( ',' type  )* ')' )?
                  ( 'mod'  '(' type  ( ',' type  )* ')' )? 
   ;
   
-consts  : 'const' ( ident  '=' valeur  ptvg  )+ 
+consts  : 'const' ( ident  '=' valeur {PtGen.pt(22);} ptvg  )+ 
   ;
   
-vars  : 'var' ( type ident ( ','  ident  )* ptvg  )+
+vars  : 'var' ( type ident {PtGen.pt(23);} ( ','  ident {PtGen.pt(23);}  )* ptvg {PtGen.pt(24);} )+
   ;
   
-type  : 'ent'  
-  |     'bool' 
+type  : 'ent'  {PtGen.pt(2);}
+  |     'bool' {PtGen.pt(3);}
   ;
   
 decprocs: (decproc ptvg)+
@@ -113,19 +113,19 @@ instruction
   |
   ;
   
-inssi : 'si' expression 'alors' instructions ('sinon'  instructions)? 'fsi' 
+inssi : 'si' expression {PtGen.pt(16);} {PtGen.pt(25);} 'alors' instructions ('sinon' {PtGen.pt(26);} instructions)? 'fsi'{PtGen.pt(27);} 
   ;
   
-inscond : 'cond'  expression  ':' instructions 
-          (','  expression  ':' instructions )* 
-          ('aut'  instructions |  ) 
-          'fcond' 
+inscond : 'cond'   expression {PtGen.pt(16);} {PtGen.pt(30);} ':' instructions 
+          (',' {PtGen.pt(31);} expression {PtGen.pt(16);}{PtGen.pt(30);} ':' instructions )* 
+          ('aut' {PtGen.pt(32);}  instructions |  ) 
+          'fcond' {PtGen.pt(32);}
   ;
   
-boucle  : 'ttq'  expression 'faire' instructions 'fait' 
+boucle  : 'ttq' {PtGen.pt(28);}  expression {PtGen.pt(16);} {PtGen.pt(25);}'faire' instructions 'fait' {PtGen.pt(29);}
   ;
   
-lecture: 'lire' '(' ident {PtGen.pt(20);}  ( ',' ident  {PtGen.pt(20)};)* ')' 
+lecture: 'lire' '(' ident {PtGen.pt(20);}  ( ',' ident  {PtGen.pt(20);})* ')' 
   ;
   
 ecriture: 'ecrire' '(' expression {PtGen.pt(21);} ( ',' expression {PtGen.pt(21);} )* ')'
@@ -149,7 +149,7 @@ expression: (exp1) ({PtGen.pt(16);}'ou'  exp1{PtGen.pt(16);} {PtGen.pt(17);}  )*
 exp1  : exp2  ({PtGen.pt(16);}'et'  exp2 {PtGen.pt(16);} {PtGen.pt(18);})* 
   ;
   
-exp2  : 'non' exp2 {PtGen.pt(16;)} {PtGen.pt(19);}
+exp2  : 'non' exp2 {PtGen.pt(16);} {PtGen.pt(19);}
   | exp3
   ;
   
@@ -180,11 +180,11 @@ primaire: valeur {PtGen.pt(1);}
   | '(' expression ')'
   ;
   
-valeur  : nbentier 
+valeur  : nbentier {PtGen.pt(2);}
   | '+' nbentier {PtGen.pt(2);}
-  | '-' nbentier {PtGen.pt(3);}
-  | 'vrai' 
-  | 'faux' 
+  | '-' nbentier {PtGen.pt(2);}
+  | 'vrai' {PtGen.pt(3);}
+  | 'faux' {PtGen.pt(3);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //
