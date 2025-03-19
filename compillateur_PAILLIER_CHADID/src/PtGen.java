@@ -62,7 +62,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars;
+	private static int inddervars,nbparam;
 
     // utilitaires de controle de type
     // -------------------------------
@@ -212,6 +212,7 @@ public class PtGen {
 		tCour = NEUTRE;
 
 		inddervars =0;
+		nbparam = 0;
 
 	} // initialisations
 
@@ -370,6 +371,34 @@ public class PtGen {
 			break;
 		case 32:
 			po.modifier(pileRep.depiler(), po.getIpo()+1);
+			break;
+		case 33:
+			if(presentIdent(1)!=0){
+				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
+			}else{
+				placeIdent(UtilLex.numIdCourant, PROC, NEUTRE,  nbparam);
+				placeIdent(-1,PRIVEE,NEUTRE,nbparam);
+			}
+			break;
+		case 34:
+			break;
+		case 35:
+			break;
+		case 100:
+			if(bc>1){
+				po.produire(RETOUR);
+				po.produire(nbparam);
+				//  modification de la table des symbole
+				for(int i = bc;i<nbparam;i++){
+					tabSymb[i].code = -1;
+				}
+				// suppresion des variables locales de la procédures
+
+				//réinitialisation de nbparam
+				
+			}else{
+				po.produire(ARRET);
+			}
 			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
