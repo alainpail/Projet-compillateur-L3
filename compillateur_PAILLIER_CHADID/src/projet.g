@@ -140,7 +140,7 @@ affouappel
 effixes : '(' (expression {PtGen.pt(39);} (',' expression {PtGen.pt(39);} )*)? ')'
   ;
   
-effmods :'(' (ident  (',' ident  )*)? ')'
+effmods :'(' (ident {PtGen.pt(40);} (',' ident {PtGen.pt(40);} )*)? ')'
   ; 
   
 expression: (exp1) ({PtGen.pt(16);}'ou'  exp1{PtGen.pt(16);} {PtGen.pt(17);}  )*
@@ -184,7 +184,7 @@ valeur  : nbentier {PtGen.pt(2);}
   | '+' nbentier {PtGen.pt(2);}
   | '-' nbentier {PtGen.pt(2);}
   | 'vrai' {PtGen.pt(3);} {PtGen.pt(41);}
-  | 'faux' {PtGen.pt(3);} {Ptgen.pt(42);}
+  | 'faux' {PtGen.pt(3);} {PtGen.pt(42);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //

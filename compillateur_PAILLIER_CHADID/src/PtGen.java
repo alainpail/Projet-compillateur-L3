@@ -428,9 +428,13 @@ public class PtGen {
 			po.produire(tabSymb[tmp+1].info);
 			break;
 		case 39:
-			
+			po.produire(CONTENUG);
+			po.produire(vCour);
 			break;
 		case 40:
+			tmp=presentIdent(1);
+			po.produire(EMPILERADG);
+			po.produire(tmp);
 			break;
 		case 41:
 			po.produire(VRAI);
