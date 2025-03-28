@@ -77,7 +77,7 @@ type  : 'ent'  {PtGen.pt(2);}
 decprocs: (decproc ptvg)+
   ;
   
-decproc :  'proc'  ident {PtGen.pt(33);} parfixe? parmod? consts? vars? corps 
+decproc :  'proc'  ident {PtGen.pt(33);} parfixe? parmod? {PtGen.pt(36);} consts? vars? corps 
   ;
   
 ptvg  : ';'
@@ -183,8 +183,8 @@ primaire: valeur {PtGen.pt(1);}
 valeur  : nbentier {PtGen.pt(2);}
   | '+' nbentier {PtGen.pt(2);}
   | '-' nbentier {PtGen.pt(2);}
-  | 'vrai' {PtGen.pt(3);}
-  | 'faux' {PtGen.pt(3);}
+  | 'vrai' {PtGen.pt(3);} {PtGen.pt(40);}
+  | 'faux' {PtGen.pt(3);} {Ptgen.pt(41);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //

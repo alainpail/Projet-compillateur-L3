@@ -62,7 +62,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars,nbparam;
+	private static int inddervars,nbparam,nbvarl;
 
     // utilitaires de controle de type
     // -------------------------------
@@ -213,6 +213,7 @@ public class PtGen {
 
 		inddervars =0;
 		nbparam = 0;
+		nbvarl=0;
 
 	} // initialisations
 
@@ -319,16 +320,19 @@ public class PtGen {
 		case 22://gestion des constantes
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
-			}else{
+			}else {
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
-			}
+			} 
 			break;
 		case 23:
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
-			}else{
+			}else if(bc==1){
 				placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, inddervars);
 				inddervars ++;
+			}else{
+				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, nbparam+3+nbvarl);
+				nbvarl++;
 			}
 			break;
 		case 24:
@@ -376,13 +380,39 @@ public class PtGen {
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
-				placeIdent(UtilLex.numIdCourant, PROC, NEUTRE,  nbparam);
+				placeIdent(UtilLex.numIdCourant, PROC, NEUTRE,  po.getIpo());
 				placeIdent(-1,PRIVEE,NEUTRE,nbparam);
 			}
 			break;
 		case 34:
+			if(presentIdent(1)!=0){
+				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
+			}else{
+				if(vCour==ENT){
+					placeIdent(UtilLex.numIdCourant, PARAMFIXE, ENT, nbparam);
+				}else{
+					placeIdent(UtilLex.numIdCourant, PARAMFIXE, BOOL, nbparam);
+				}
+				nbparam ++;
+			}
 			break;
 		case 35:
+			if(presentIdent(1)!=0){
+				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
+			}else{
+				placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, nbparam);
+				nbparam ++;
+			}
+			break;
+		case 36:
+			tabSymb[it-nbparam].info = nbparam;
+			bc = it-nbparam;
+			break;
+		case 40:
+			po.produire(VRAI);
+			break;
+		case 41:
+			po.produire(FAUX);
 			break;
 		case 100:
 			if(bc>1){
@@ -393,9 +423,9 @@ public class PtGen {
 					tabSymb[i].code = -1;
 				}
 				// suppresion des variables locales de la procédures
-
-				//réinitialisation de nbparam
 				
+				//réinitialisation de nbparam
+				nbparam = 0;
 			}else{
 				po.produire(ARRET);
 			}

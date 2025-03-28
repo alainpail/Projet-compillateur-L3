@@ -183,8 +183,8 @@ primaire: valeur {PtGen.pt(1);}
 valeur  : nbentier {PtGen.pt(2);}
   | '+' nbentier {PtGen.pt(2);}
   | '-' nbentier {PtGen.pt(2);}
-  | 'vrai' {PtGen.pt(3);}
-  | 'faux' {PtGen.pt(3);}
+  | 'vrai' {PtGen.pt(3);} {PtGen.pt(40);}
+  | 'faux' {PtGen.pt(3);} {Ptgen.pt(41);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //
