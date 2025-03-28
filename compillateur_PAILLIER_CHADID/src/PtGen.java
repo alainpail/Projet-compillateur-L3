@@ -428,6 +428,7 @@ public class PtGen {
 			po.produire(tabSymb[tmp+1].info);
 			break;
 		case 39:
+			
 			break;
 		case 40:
 			break;

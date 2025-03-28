@@ -1,1 +1,1 @@
-Nous avons fais le "si" , le "tant que" ,les expressions et les déclarations.Le "cond" n'est pas fini.
+La gestion des appels de procédures est incomplete donc non fonctionnelle.
