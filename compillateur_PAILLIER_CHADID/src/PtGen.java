@@ -408,6 +408,14 @@ public class PtGen {
 			tabSymb[it-nbparam].info = nbparam;
 			bc = it-nbparam;
 			break;
+		case 37:
+			tmp=presentIdent(1);
+			if(tabSymb[tmp].categorie==CONSTANTE){
+				UtilLex.messErr("une constante ne pas être modifier");
+			}else
+			po.produire(AFFECTERG);
+			po.produire(tabSymb[tmp].info);
+			break;
 		case 40:
 			po.produire(VRAI);
 			break;
