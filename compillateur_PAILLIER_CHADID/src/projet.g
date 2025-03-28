@@ -133,11 +133,11 @@ ecriture: 'ecrire' '(' expression {PtGen.pt(21);} ( ',' expression {PtGen.pt(21)
   
 affouappel
   : ident  (    ':=' expression {PtGen.pt(37);}
-            |   (effixes (effmods)?)?  
+            |   (effixes (effmods)?)?  {PtGen.pt(38);}
            )
   ;
   
-effixes : '(' (expression  (',' expression  )*)? ')'
+effixes : '(' (expression {PtGen.pt(39);} (',' expression {PtGen.pt(39);} )*)? ')'
   ;
   
 effmods :'(' (ident  (',' ident  )*)? ')'
@@ -183,8 +183,8 @@ primaire: valeur {PtGen.pt(1);}
 valeur  : nbentier {PtGen.pt(2);}
   | '+' nbentier {PtGen.pt(2);}
   | '-' nbentier {PtGen.pt(2);}
-  | 'vrai' {PtGen.pt(3);} {PtGen.pt(40);}
-  | 'faux' {PtGen.pt(3);} {Ptgen.pt(41);}
+  | 'vrai' {PtGen.pt(3);} {PtGen.pt(41);}
+  | 'faux' {PtGen.pt(3);} {Ptgen.pt(42);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //

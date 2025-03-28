@@ -22,6 +22,8 @@
 
 import java.io.*;
 
+import org.antlr.grammar.v3.ANTLRParser.elementNoOptionSpec_return;
+
 /**
  * classe de mise en oeuvre du compilateur
  * =======================================
@@ -412,14 +414,27 @@ public class PtGen {
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
-			}else
+			}
 			po.produire(AFFECTERG);
 			po.produire(tabSymb[tmp].info);
 			break;
+		case 38:
+			tmp=presentIdent(1);
+			if(tmp==0){
+				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ UtilLex.numIdCourant);
+			}
+			po.produire(APPEL);
+			po.produire(tabSymb[tmp].info);
+			po.produire(tabSymb[tmp+1].info);
+			break;
+		case 39:
+			break;
 		case 40:
-			po.produire(VRAI);
 			break;
 		case 41:
+			po.produire(VRAI);
+			break;
+		case 42:
 			po.produire(FAUX);
 			break;
 		case 100:
