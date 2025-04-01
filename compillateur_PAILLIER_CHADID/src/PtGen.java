@@ -241,10 +241,10 @@ public class PtGen {
 		case 2://nbentier
 			tCour = ENT;
 			break;		
-		case 3://nbentier
+		case 3://booléen
 			tCour = BOOL;
 			break;
-		case 4:
+		case 4://empilement de la valeur de la constante ou de va la variable
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				po.produire(EMPILER);
@@ -362,13 +362,12 @@ public class PtGen {
 		case 28://gestion du ttq [] faire [] fait
 			pileRep.empiler(po.getIpo());
 			break;
-		case 29:
+		case 29://gestion du ttq 2
 			po.modifier(pileRep.depiler(),po.getIpo() + 3);
 			po.produire(BINCOND);
 			po.produire(pileRep.depiler());
-			break;
-		//gestion du cond
-		case 30:
+			break;	
+		case 30://gestion du cond
 			po.produire(BSIFAUX);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
@@ -382,7 +381,7 @@ public class PtGen {
 		case 32:
 			po.modifier(pileRep.depiler(), po.getIpo()+1);
 			break;
-		case 33:
+		case 33://ajout tabSymn d'une proc
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
@@ -390,7 +389,7 @@ public class PtGen {
 				placeIdent(-1,PRIVEE,NEUTRE,nbparam);
 			}
 			break;
-		case 34:
+		case 34://ajout tabSymb d'un parametre fixe
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
@@ -399,7 +398,7 @@ public class PtGen {
 				nbparam ++;
 			}
 			break;
-		case 35:
+		case 35://ajout tabSymb d'un parametre modifiable
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
@@ -412,7 +411,7 @@ public class PtGen {
 			tabSymb[it-nbparam].info = nbparam;
 			bc = it-nbparam;
 			break;
-		case 37:
+		case 37://affectation
 			if(tabSymb[id].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
 			}
@@ -449,7 +448,7 @@ public class PtGen {
 			po.produire(EMPILERADG);
 			po.produire(tmp);
 			break;
-		case 41: // conservation de l'idince de l'ident
+		case 41:// conservation de l'idince de l'ident
 			id=presentIdent(1);
 			if(id==0){
 				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ id);
