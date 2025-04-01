@@ -64,7 +64,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars,nbparam,nbvarl;
+	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam;
 
     // utilitaires de controle de type
     // -------------------------------
@@ -120,7 +120,7 @@ public class PtGen {
     // -------------------------
     
  // MERCI de renseigner ici un nom pour le trinome, constitue EXCLUSIVEMENT DE LETTRES
-    public static String trinome="PAILLIER Alan et CHAHID Hafsa"; 	//TODO 
+    public static String trinome="PAILLIER Alan et CHAHID Hafsa";
     
     private static int tCour; // type de l'expression compilee
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
@@ -214,8 +214,12 @@ public class PtGen {
 		tCour = NEUTRE;
 
 		inddervars =0;
-		nbparam = 0;
+		nbparamfixAt = 0;
+		nbparamModAt=0;
+		nbparamModRe=0;
+		nbparamfixRe=0;
 		nbvarl=0;
+		id=0;
 
 	} // initialisations
 
@@ -320,14 +324,14 @@ public class PtGen {
 			}
 			break;
 		case 22://gestion des constantes
-			if(presentIdent(1)!=0){
+			if(presentIdent(bc)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else {
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
 			} 
 			break;
 		case 23:
-			if(presentIdent(1)!=0){
+			if(presentIdent(bc)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else if(bc==1){
 				placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, inddervars);
@@ -390,11 +394,8 @@ public class PtGen {
 			if(presentIdent(1)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
-				if(vCour==ENT){
-					placeIdent(UtilLex.numIdCourant, PARAMFIXE, ENT, nbparam);
-				}else{
-					placeIdent(UtilLex.numIdCourant, PARAMFIXE, BOOL, nbparam);
-				}
+				placeIdent(UtilLex.numIdCourant, PARAMFIXE, vCour, nbparam);
+				nbparamfixAt++;
 				nbparam ++;
 			}
 			break;
@@ -403,6 +404,7 @@ public class PtGen {
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
 				placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, nbparam);
+				nbparamModAt++;
 				nbparam ++;
 			}
 			break;
@@ -411,28 +413,42 @@ public class PtGen {
 			bc = it-nbparam;
 			break;
 		case 37:
-			tmp=presentIdent(1);
-			if(tabSymb[tmp].categorie==CONSTANTE){
+			if(tabSymb[id].categorie==CONSTANTE){
 				UtilLex.messErr("une constante ne pas être modifier");
 			}
+			po.produire(EMPILER);
+			po.produire(vCour);
 			po.produire(AFFECTERG);
-			po.produire(tabSymb[tmp].info);
+			po.produire(tabSymb[id].info);
 			break;
 		case 38:
-			tmp=presentIdent(1);
-			if(tmp==0){
+			if(id==0){
 				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ UtilLex.numIdCourant);
 			}
+			if(nbparamfixAt != nbparamfixRe){
+				UtilLex.messErr("le nombre de paramètre fixe ne correspont pas a ce qui est a attendu");
+			}
+			if(nbparamModAt != nbparamModRe){
+				UtilLex.messErr("le nombre de paramètre modifiable ne correspont pas a ce qui est a attendu");
+			}
 			po.produire(APPEL);
-			po.produire(tabSymb[tmp].info);
-			po.produire(tabSymb[tmp+1].info);
+			po.produire(tabSymb[id].info);
+			po.produire(tabSymb[id+1].info);
 			break;
 		case 39:
+			if(tCour != tabSymb[id+2+nbparam].type){
+				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
+			}
+			nbparamfixRe++;
 			po.produire(CONTENUG);
 			po.produire(vCour);
 			break;
 		case 40:
 			tmp=presentIdent(1);
+			if(tabSymb[tmp].type != tabSymb[id+2+nbparam].type){
+				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
+			}
+			nbparamfixRe++;
 			po.produire(EMPILERADG);
 			po.produire(tmp);
 			break;
@@ -442,16 +458,27 @@ public class PtGen {
 		case 42:
 			po.produire(FAUX);
 			break;
+		case 43:
+			id=presentIdent(1);
+			break;
+		case 44:
+			nbparam = tabSymb[id+1].info;
+			for(int i= id + 2;i<nbparam;i++){
+				if(tabSymb[i].categorie == PARAMFIXE){
+					nbparamfixAt++;
+				}else nbparamModAt++;
+			}
+			break;
 		case 100:
 			if(bc>1){
 				po.produire(RETOUR);
 				po.produire(nbparam);
 				//  modification de la table des symbole
-				for(int i = bc;i<nbparam;i++){
+				for(int i = bc+2;i<nbparam;i++){
 					tabSymb[i].code = -1;
 				}
 				// suppresion des variables locales de la procédures
-				
+				it=bc+1+nbparam;
 				//réinitialisation de nbparam
 				nbparam = 0;
 			}else{
