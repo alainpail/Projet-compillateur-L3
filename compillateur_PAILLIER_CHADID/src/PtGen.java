@@ -231,17 +231,17 @@ public class PtGen {
 	public static void pt(int numGen) {
 		int tmp;
 		switch (numGen) {
-		case 0:
+		case 0://Initialisations
 			initialisations();
 			break;
-		case 1:
+		case 1://valeur
 			po.produire(EMPILER);
 			po.produire(vCour);
 			break;
-		case 2:
+		case 2://nbentier
 			tCour = ENT;
 			break;		
-		case 3:
+		case 3://nbentier
 			tCour = BOOL;
 			break;
 		case 4:
@@ -330,7 +330,7 @@ public class PtGen {
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, UtilLex.valEnt);
 			} 
 			break;
-		case 23:
+		case 23://gestion des variables
 			if(presentIdent(bc)!=0){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else if(bc==1){
@@ -341,7 +341,7 @@ public class PtGen {
 				nbvarl++;
 			}
 			break;
-		case 24:
+		case 24://gestion des variables locales d'une procédures
 			po.produire(RESERVER);
 			po.produire(inddervars);
 			break;
@@ -421,10 +421,7 @@ public class PtGen {
 			po.produire(AFFECTERG);
 			po.produire(tabSymb[id].info);
 			break;
-		case 38:
-			if(id==0){
-				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ UtilLex.numIdCourant);
-			}
+		case 38://vérification du nbr de param fixe et mod et appel de proc
 			if(nbparamfixAt != nbparamfixRe){
 				UtilLex.messErr("le nombre de paramètre fixe ne correspont pas a ce qui est a attendu");
 			}
@@ -435,7 +432,7 @@ public class PtGen {
 			po.produire(tabSymb[id].info);
 			po.produire(tabSymb[id+1].info);
 			break;
-		case 39:
+		case 39://gestion des paramètre mod en vue d'un appel de proc 
 			if(tCour != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
 			}
@@ -443,7 +440,7 @@ public class PtGen {
 			po.produire(CONTENUG);
 			po.produire(vCour);
 			break;
-		case 40:
+		case 40://gestion des paramètre fixe en vue d'un appel de proc
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].type != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
@@ -452,16 +449,13 @@ public class PtGen {
 			po.produire(EMPILERADG);
 			po.produire(tmp);
 			break;
-		case 41:
-			po.produire(VRAI);
-			break;
-		case 42:
-			po.produire(FAUX);
-			break;
-		case 43:
+		case 41: // conservation de l'idince de l'ident
 			id=presentIdent(1);
+			if(id==0){
+				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ id);
+			}
 			break;
-		case 44:
+		case 42://comptage nombre attendu param fix et mod pour vérification
 			nbparam = tabSymb[id+1].info;
 			for(int i= id + 2;i<nbparam;i++){
 				if(tabSymb[i].categorie == PARAMFIXE){
@@ -469,6 +463,17 @@ public class PtGen {
 				}else nbparamModAt++;
 			}
 			break;
+		case 50:
+			vCour = 0+vCour;
+			break;
+		case 51:
+			vCour = 0-vCour;
+			break;
+		case 52:
+			vCour = VRAI;
+			break;
+		case 53:
+			vCour = FAUX;
 		case 100:
 			if(bc>1){
 				po.produire(RETOUR);
