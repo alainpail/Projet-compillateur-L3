@@ -64,7 +64,8 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam,nbdef,nbref;
+	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam,nbdef,nbref,nbparamref;
+	private static String nomProc;
 
     // utilitaires de controle de type
     // -------------------------------
@@ -342,9 +343,10 @@ public class PtGen {
 				nbvarl++;
 			}
 			break;
-		case 24://gestion des variables locales d'une procédures
+		case 24://gestion des variables 2
 			po.produire(RESERVER);
 			po.produire(inddervars);
+			desc.setTailleGlobaux(inddervars);
 			break;
 		case 25://gestion du si [] alors [] sinon [] fsi
 			po.produire(BSIFAUX);
@@ -463,31 +465,59 @@ public class PtGen {
 				}else nbparamModAt++;
 			}
 			break;
-		case 43:
+		case 43://entier positif
 			vCour = 0+vCour;
 			break;
-		case 44:
+		case 44://entier négatif
 			vCour = 0-vCour;
 			break;
-		case 45:
+		case 45://true
 			vCour = VRAI;
 			break;
-		case 46:
+		case 46://false
 			vCour = FAUX;
 			break;
 		case 47://gestion ref
 			placeIdent(UtilLex.numIdCourant, REF,NEUTRE,nbref);
-			nbref++;
+			nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
+			desc.ajoutRef(nomProc);
+			nbparamref=0;
 			break;
-		case 48://gestion Def
-			placeIdent(UtilLex.numIdCourant, DEF, NEUTRE, nbdef);
-			nbdef++;
+		case 48:
+			++nbparamref;
 			break;
 		case 49:
-			
+			id=desc.presentRef(UtilLex.chaineIdent(UtilLex.numIdCourant));
+			desc.modifRefNbParam(id,nbparamref);
+			break;
+		case 50://gestion Def
+			placeIdent(UtilLex.numIdCourant, DEF, NEUTRE, nbdef);
+			desc.ajoutDef(UtilLex.chaineIdent(UtilLex.numIdCourant));
+			++nbdef;
 			break;
 		case 100://gestion de la fin du corp
-			if(bc>1){
+			if(desc.getUnite().equals("programme")){
+				if(bc>1){
+					desc.setTailleCode(desc.getTailleCode()+po.getIpo());
+					po.produire(RETOUR);
+					po.produire(nbparam);
+					//  modification de la table des symbole
+					for(int i = bc+2;i<nbparam;i++){
+						tabSymb[i].code = -1;
+					}
+					// suppresion des variables locales de la procédures
+					it=bc+1+nbparam;
+					//réinitialisation de nbparam
+					nbparam = 0;
+					//
+					
+				}else{
+					po.produire(ARRET);
+					desc.setTailleCode(po.getIpo());
+				}
+				break;
+			}else{
+				desc.setTailleCode(desc.getTailleCode()+po.getIpo());
 				po.produire(RETOUR);
 				po.produire(nbparam);
 				//  modification de la table des symbole
@@ -498,10 +528,7 @@ public class PtGen {
 				it=bc+1+nbparam;
 				//réinitialisation de nbparam
 				nbparam = 0;
-			}else{
-				po.produire(ARRET);
 			}
-			break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

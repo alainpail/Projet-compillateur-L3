@@ -54,14 +54,14 @@ declarations
   ;
   
 partiedef
-  : 'def' ident {PtGen.pt(48);} (',' ident {PtGen.pt(48);})* ptvg
+  : 'def' ident {PtGen.pt(50);} (',' ident {PtGen.pt(50);})* ptvg
   ;
   
-partieref: 'ref' specif {PtGen.pt(47);}(',' specif {PtGen.pt(47);})* ptvg
+partieref: 'ref' specif {PtGen.pt(49)}(',' specif {PtGen.pt(49)} )* ptvg
   ;
   
-specif  : ident  ( 'fixe' '(' type  ( ',' type  )* ')' )? 
-                 ( 'mod'  '(' type  ( ',' type  )* ')' )? 
+specif  : ident {PtGen.pt(47);}  ( 'fixe' '(' type {PtGen.pt(48)} ( ',' type {PtGen.pt(48)} )* ')' )? 
+                 ( 'mod'  '(' type {PtGen.pt(48)} ( ',' type {PtGen.pt(48)} )* ')' )? 
   ;
   
 consts  : 'const' ( ident  '=' valeur {PtGen.pt(22);} ptvg  )+ 
@@ -196,7 +196,7 @@ valeur  : nbentier {PtGen.pt(2);}
       
 nbentier  :   INT { UtilLex.valEnt = Integer.parseInt($INT.text);}; // mise a jour de valEnt
 
-ident : ID  { UtilLex.traiterId($ID.text); } ; // mise a jour de numIdCourant
+ident : ID { UtilLex.traiterId($ID.text); } ; // mise a jour de numIdCourant
      // tous les identificateurs seront places dans la table des identificateurs, y compris le nom du programme ou module
      // (NB: la table des symboles n'est pas geree au niveau lexical mais au niveau du compilateur)
         
