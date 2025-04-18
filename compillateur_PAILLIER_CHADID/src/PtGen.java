@@ -344,8 +344,10 @@ public class PtGen {
 			}
 			break;
 		case 24://gestion des variables 2
-			po.produire(RESERVER);
-			po.produire(inddervars);
+			if(desc.getUnite().equals("programme")){
+				po.produire(RESERVER);
+				po.produire(inddervars);
+			}
 			desc.setTailleGlobaux(inddervars);
 			break;
 		case 25://gestion du si [] alors [] sinon [] fsi
