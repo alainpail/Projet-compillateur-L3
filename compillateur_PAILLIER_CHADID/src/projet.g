@@ -54,10 +54,10 @@ declarations
   ;
   
 partiedef
-  : 'def' ident  (',' ident )* ptvg
+  : 'def' ident {PtGen.pt(48);} (',' ident {PtGen.pt(48);})* ptvg
   ;
   
-partieref: 'ref'  specif (',' specif)* ptvg
+partieref: 'ref' specif {PtGen.pt(47);}(',' specif {PtGen.pt(47);})* ptvg
   ;
   
 specif  : ident  ( 'fixe' '(' type  ( ',' type  )* ')' )? 
@@ -181,10 +181,10 @@ primaire: valeur {PtGen.pt(1);}
   ;
   
 valeur  : nbentier {PtGen.pt(2);}
-  | '+' nbentier {PtGen.pt(2);} {PtGen.pt(50);}
-  | '-' nbentier {PtGen.pt(2);} {PtGen.pt(51);}
-  | 'vrai' {PtGen.pt(3);} {PtGen.pt(52);}
-  | 'faux' {PtGen.pt(3);} {PtGen.pt(53);}
+  | '+' nbentier {PtGen.pt(2);} {PtGen.pt(43);}
+  | '-' nbentier {PtGen.pt(2);} {PtGen.pt(44);}
+  | 'vrai' {PtGen.pt(3);} {PtGen.pt(45);}
+  | 'faux' {PtGen.pt(3);} {PtGen.pt(46);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //

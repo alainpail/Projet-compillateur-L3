@@ -64,7 +64,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam;
+	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam,nbdef,nbref;
 
     // utilitaires de controle de type
     // -------------------------------
@@ -220,7 +220,8 @@ public class PtGen {
 		nbparamfixRe=0;
 		nbvarl=0;
 		id=0;
-
+		nbdef=0;
+		nbref=0;
 	} // initialisations
 
 	/**
@@ -462,18 +463,30 @@ public class PtGen {
 				}else nbparamModAt++;
 			}
 			break;
-		case 50:
+		case 43:
 			vCour = 0+vCour;
 			break;
-		case 51:
+		case 44:
 			vCour = 0-vCour;
 			break;
-		case 52:
+		case 45:
 			vCour = VRAI;
 			break;
-		case 53:
+		case 46:
 			vCour = FAUX;
-		case 100:
+			break;
+		case 47://gestion ref
+			placeIdent(UtilLex.numIdCourant, REF,NEUTRE,nbref);
+			nbref++;
+			break;
+		case 48://gestion Def
+			placeIdent(UtilLex.numIdCourant, DEF, NEUTRE, nbdef);
+			nbdef++;
+			break;
+		case 49:
+			
+			break;
+		case 100://gestion de la fin du corp
 			if(bc>1){
 				po.produire(RETOUR);
 				po.produire(nbparam);
