@@ -498,8 +498,13 @@ public class PtGen {
 			++nbdef;
 			break;
 		case 51:
-			nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
-			desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
+			if(bc>1 && desc.getUnite().equals("programme")){
+				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
+				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
+			}else if(desc.getUnite().equals("module")){
+				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
+				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
+			}
 			break;		
 		case 100://gestion de la fin du corp
 			if(desc.getUnite().equals("programme")){
