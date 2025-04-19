@@ -387,12 +387,12 @@ public class PtGen {
 			po.modifier(pileRep.depiler(), po.getIpo()+1);
 			break;
 		case 33://ajout tabSymn d'une proc
-			if(presentIdent(1)!=0){
+			if(id !=0 && tabSymb[id].categorie != DEF){
 				UtilLex.messErr(UtilLex.numIdCourant+"est déja présent dans tabsymbole");
 			}else{
 				placeIdent(UtilLex.numIdCourant, PROC, NEUTRE,  po.getIpo());
 				placeIdent(-1,PRIVEE,NEUTRE,nbparam);
-			}
+			}	
 			break;
 		case 34://ajout tabSymb d'un parametre fixe
 			if(presentIdent(1)!=0){
@@ -453,7 +453,7 @@ public class PtGen {
 			po.produire(EMPILERADG);
 			po.produire(tmp);
 			break;
-		case 41:// conservation de l'idince de l'ident
+		case 41:// conservation de l'indice de l'ident
 			id=presentIdent(1);
 			if(id==0){
 				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ id);
@@ -497,6 +497,10 @@ public class PtGen {
 			desc.ajoutDef(UtilLex.chaineIdent(UtilLex.numIdCourant));
 			++nbdef;
 			break;
+		case 51:
+			nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
+			desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
+			break;		
 		case 100://gestion de la fin du corp
 			if(desc.getUnite().equals("programme")){
 				if(bc>1){
@@ -509,10 +513,10 @@ public class PtGen {
 					}
 					// suppresion des variables locales de la procédures
 					it=bc+1+nbparam;
+					//
+					desc.modifDefNbParam(desc.presentDef(nomProc), nbparam);
 					//réinitialisation de nbparam
 					nbparam = 0;
-					//
-					
 				}else{
 					po.produire(ARRET);
 					desc.setTailleCode(po.getIpo());
@@ -528,6 +532,8 @@ public class PtGen {
 				}
 				// suppresion des variables locales de la procédures
 				it=bc+1+nbparam;
+				//
+				desc.modifDefNbParam(desc.presentDef(nomProc), nbparam);
 				//réinitialisation de nbparam
 				nbparam = 0;
 			}
