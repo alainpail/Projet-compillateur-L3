@@ -64,7 +64,7 @@ public class PtGen {
     //valeurs possible du vecteur de translation 
     TRANSDON=1,TRANSCODE=2,REFEXT=3;
 
-	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam,nbdef,nbref,nbparamref;
+	private static int inddervars,nbparamModAt,nbparamModRe,nbvarl,id,nbparamfixAt,nbparamfixRe,nbparam,nbdef,nbref,nbparamref,nbparamrefFix,nbparamrefMod;
 	private static String nomProc;
 
     // utilitaires de controle de type
@@ -254,6 +254,9 @@ public class PtGen {
 				po.produire(CONTENUG);
 			}		
 			po.produire(tabSymb[tmp].info);
+			if(desc.getUnite().equals("module")) {
+				modifVecteurTrans(TRANSDON);
+			}
 			break;
 		case 5://gestion de l'addition
 			po.produire(ADD);
@@ -354,12 +357,18 @@ public class PtGen {
 			po.produire(BSIFAUX);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}
 			break;
 		case 26://bsifaux de inssi
 			po.modifier(pileRep.depiler(), po.getIpo()+3);
 			po.produire(BINCOND);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}
 			break;
 		case 27://bincond de inssi
 			po.modifier(pileRep.depiler(),po.getIpo()+1);
@@ -371,17 +380,26 @@ public class PtGen {
 			po.modifier(pileRep.depiler(),po.getIpo() + 3);
 			po.produire(BINCOND);
 			po.produire(pileRep.depiler());
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}
 			break;	
 		case 30://gestion du cond
 			po.produire(BSIFAUX);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}	
 			break;
 		case 31:
 			po.modifier(pileRep.depiler(), po.getIpo()+3);
 			po.produire(BINCOND);
 			po.produire(-1);
 			pileRep.empiler(po.getIpo());
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}
 			break;
 		case 32:
 			po.modifier(pileRep.depiler(), po.getIpo()+1);
@@ -424,6 +442,9 @@ public class PtGen {
 			po.produire(vCour);
 			po.produire(AFFECTERG);
 			po.produire(tabSymb[id].info);
+			if(desc.getUnite().equals("module")) {
+				modifVecteurTrans(TRANSDON);
+			}
 			break;
 		case 38://vérification du nbr de param fixe et mod et appel de proc
 			if(nbparamfixAt != nbparamfixRe){
@@ -434,7 +455,13 @@ public class PtGen {
 			}
 			po.produire(APPEL);
 			po.produire(tabSymb[id].info);
-			po.produire(tabSymb[id+1].info);
+			po.produire(nbparam);
+			if(tabSymb[id].categorie == REF){
+				modifVecteurTrans(REFEXT);
+			}
+			if(desc.getUnite().equals("module")){
+				modifVecteurTrans(TRANSCODE);
+			}
 			break;
 		case 39://gestion des paramètre mod en vue d'un appel de proc 
 			if(tCour != tabSymb[id+2+nbparam].type){
@@ -459,12 +486,22 @@ public class PtGen {
 				UtilLex.messErr("il n'existe pas de procédure de ce nom :"+ id);
 			}
 			break;
-		case 42://comptage nombre attendu param fix et mod pour vérification
-			nbparam = tabSymb[id+1].info;
-			for(int i= id + 2;i<nbparam;i++){
-				if(tabSymb[i].categorie == PARAMFIXE){
-					nbparamfixAt++;
-				}else nbparamModAt++;
+		case 42://comptage nombre attendu param fix et mod pour vérification	
+			if(tabSymb[id].categorie==PROC){
+				nbparam = tabSymb[id+1].info;
+				for(int i= id + 2;i<nbparam;i++){
+					if(tabSymb[i].categorie == PARAMFIXE){
+						nbparamfixAt++;
+					}else nbparamModAt++;
+				}
+			}else{
+				nomProc = UtilLex.chaineIdent(id);
+				nbparam=desc.getRefNbParam(desc.presentRef(nomProc));
+				for(int i= id + 1;i<nbparam;i++){
+					if(tabSymb[i].categorie == PARAMFIXE){
+						nbparamfixAt++;
+					}else nbparamModAt++;
+				}
 			}
 			break;
 		case 43://entier positif
@@ -484,20 +521,28 @@ public class PtGen {
 			nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
 			desc.ajoutRef(nomProc);
 			nbparamref=0;
+			nbparamrefFix = 0;
+			nbparamrefMod = 0;
 			break;
-		case 48:
-			++nbparamref;
+		case 48://gestion paramfix des ref
+			++nbparamrefFix;
+			placeIdent(-1, PARAMFIXE, tCour, -1);
 			break;
-		case 49:
+		case 49://gestion parammod des ref
+			++nbparamrefMod;
+			placeIdent(-1, PARAMMOD, tCour, -1);
+			break;
+		case 50://gestion 
+			nbparamref=nbparamrefFix+nbparamrefMod;
 			id=desc.presentRef(UtilLex.chaineIdent(UtilLex.numIdCourant));
 			desc.modifRefNbParam(id,nbparamref);
 			break;
-		case 50://gestion Def
+		case 51://gestion Def
 			placeIdent(UtilLex.numIdCourant, DEF, NEUTRE, nbdef);
 			desc.ajoutDef(UtilLex.chaineIdent(UtilLex.numIdCourant));
 			++nbdef;
 			break;
-		case 51:
+		case 52:
 			if(bc>1 && desc.getUnite().equals("programme")){
 				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
 				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
@@ -505,7 +550,12 @@ public class PtGen {
 				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
 				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
 			}
-			break;		
+			break;
+		case 53:
+			desc.setUnite("Programme");
+			break;
+		case 54:
+			desc.setUnite("module");
 		case 100://gestion de la fin du corp
 			if(desc.getUnite().equals("programme")){
 				if(bc>1){
