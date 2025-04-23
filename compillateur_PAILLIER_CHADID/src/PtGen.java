@@ -543,13 +543,8 @@ public class PtGen {
 			++nbdef;
 			break;
 		case 52:
-			if(bc>1 && desc.getUnite().equals("programme")){
 				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
 				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
-			}else if(desc.getUnite().equals("module")){
-				nomProc = UtilLex.chaineIdent(UtilLex.numIdCourant);
-				desc.modifDefAdPo(desc.presentDef(nomProc), po.getIpo());
-			}
 			break;
 		case 53:
 			desc.setUnite("Programme");
