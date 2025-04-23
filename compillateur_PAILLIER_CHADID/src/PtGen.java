@@ -254,6 +254,7 @@ public class PtGen {
 				po.produire(CONTENUG);
 			}		
 			po.produire(tabSymb[tmp].info);
+			tCour = tabSymb[tmp].type;
 			if(desc.getUnite().equals("module")) {
 				modifVecteurTrans(TRANSDON);
 			}
