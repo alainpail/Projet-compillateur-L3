@@ -468,15 +468,20 @@ public class PtGen {
 			if(tCour != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
 			}
+			if(tabSymb[presentIdent(1)].categorie == VARGLOBALE){
+				po.produire(CONTENUG);
+				po.produire(vCour);
+			}
+
 			nbparamfixRe++;
-			po.produire(CONTENUG);
-			po.produire(vCour);
+			
 			break;
 		case 40://gestion des paramètre fixe en vue d'un appel de proc
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].type != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
 			}
+			
 			nbparamfixRe++;
 			po.produire(EMPILERADG);
 			po.produire(tmp);

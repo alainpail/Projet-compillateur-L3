@@ -67,7 +67,7 @@ specif  : ident {PtGen.pt(47);}  ( 'fixe' '(' type {PtGen.pt(48);} ( ',' type {P
 consts  : 'const' ( ident  '=' valeur {PtGen.pt(22);} ptvg  )+ 
   ;
   
-vars  : 'var' ( type ident {PtGen.pt(23);} ( ','  ident {PtGen.pt(23);}  )* ptvg {PtGen.pt(24);} )+
+vars  : 'var' ( type ident {PtGen.pt(23);} ( ','  ident {PtGen.pt(23);}  )* ptvg  )+ {PtGen.pt(24);}
   ;
   
 type  : 'ent'  {PtGen.pt(2);}
@@ -137,10 +137,10 @@ affouappel
            )
   ;
   
-effixes : '(' (expression {PtGen.pt(39);} (',' expression {PtGen.pt(39);} )*)? ')'
+effixes : '(' (expression {PtGen.pt(40);} (',' expression {PtGen.pt(40);} )*)? ')'
   ;
   
-effmods :'(' (ident {PtGen.pt(40);} (',' ident {PtGen.pt(40);} )*)? ')'
+effmods :'(' (ident {PtGen.pt(39);} (',' ident {PtGen.pt(39);} )*)? ')'
   ; 
   
 expression: (exp1) ({PtGen.pt(16);}'ou'  exp1{PtGen.pt(16);} {PtGen.pt(17);}  )*
