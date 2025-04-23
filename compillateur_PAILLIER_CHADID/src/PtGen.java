@@ -552,6 +552,11 @@ public class PtGen {
 			break;
 		case 54:
 			desc.setUnite("module");
+			break;
+		case 55:
+			po.constGen();
+			po.constObj();
+			desc.ecrireDesc(UtilLex.nomSource);
 		case 100://gestion de la fin du corp
 			if(desc.getUnite().equals("programme")){
 				if(bc>1){

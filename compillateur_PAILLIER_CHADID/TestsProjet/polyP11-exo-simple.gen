@@ -1,0 +1,42 @@
+FICHIER C:\Users\user\Documents\COURS\L3\S2\cmpl\Projet de compilateur\compilpaillierchadid\compillateur_PAILLIER_CHADID\TestsProjet\polyP11-exo-simple.gen : 
+
+   1  lirent    
+   2  affecterg       1
+   4  contenug        1
+   6  empiler         0
+   8  affecterg       0
+  10  empiler         0
+  12  empiler         0
+  14  affecterg       3
+  16  empiler         0
+  18  empiler         0
+  20  affecterg       4
+  22  contenug        0
+  24  empiler         0
+  26  sup       
+  27  bsifaux        65
+  29  lirent    
+  30  affecterg       2
+  32  contenug        3
+  34  contenug        2
+  36  add       
+  37  empiler         0
+  39  affecterg       3
+  41  contenug        2
+  43  empiler         5
+  45  eg        
+  46  bsifaux        54
+  48  empiler         1
+  50  empiler         1
+  52  affecterg       4
+  54  contenug        0
+  56  empiler         1
+  58  sous      
+  59  empiler         1
+  61  affecterg       0
+  63  bincond        21
+  65  contenug        3
+  67  ecrent    
+  68  contenug        4
+  70  ecrbool   
+  71  retour          0
