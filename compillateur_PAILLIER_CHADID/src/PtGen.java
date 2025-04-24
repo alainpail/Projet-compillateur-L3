@@ -250,10 +250,18 @@ public class PtGen {
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].categorie==CONSTANTE){
 				po.produire(EMPILER);
-			}else {
+				po.produire(tabSymb[tmp].info);
+			}else if(bc>1||desc.getUnite().equals("module")){
+				po.produire(CONTENUL);
+				po.produire(tabSymb[tmp].info);
+				if(tabSymb[tmp].categorie == VARLOCALE){
+					po.produire(0);
+				}else po.produire(0);
+				
+			}else{
 				po.produire(CONTENUG);
-			}		
-			po.produire(tabSymb[tmp].info);
+				po.produire(tabSymb[tmp].info);
+			}	
 			tCour = tabSymb[tmp].type;
 			if(desc.getUnite().equals("module")) {
 				modifVecteurTrans(TRANSDON);
@@ -436,13 +444,27 @@ public class PtGen {
 			bc = it-nbparam;
 			break;
 		case 37://affectation
-			if(tabSymb[id].categorie==CONSTANTE){
-				UtilLex.messErr("une constante ne pas être modifier");
+			switch (tabSymb[id].categorie) {
+				case CONSTANTE:
+					UtilLex.messErr("une constante ne pas être modifier");
+					break;
+				case VARLOCALE:
+					po.produire(AFFECTERL);
+					po.produire(tabSymb[id].info);
+					po.produire(0);
+					break;
+				case PARAMMOD:
+					po.produire(AFFECTERL);
+					po.produire(tabSymb[id].info);
+					po.produire(1);
+					break;
+				default:
+					po.produire(EMPILER);
+					po.produire(vCour);
+					po.produire(AFFECTERG);
+					po.produire(tabSymb[id].info);
+					break;
 			}
-			po.produire(EMPILER);
-			po.produire(vCour);
-			po.produire(AFFECTERG);
-			po.produire(tabSymb[id].info);
 			if(desc.getUnite().equals("module")) {
 				modifVecteurTrans(TRANSDON);
 			}
@@ -465,14 +487,20 @@ public class PtGen {
 			}
 			break;
 		case 39://gestion des paramètre mod en vue d'un appel de proc 
-			if(tCour != tabSymb[id+2+nbparam].type){
+			tmp=presentIdent(1);
+			if(tabSymb[tmp].type != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
 			}
-			if(tabSymb[presentIdent(1)].categorie == VARGLOBALE){
-				po.produire(CONTENUG);
-				po.produire(vCour);
+			if(tabSymb[tmp].categorie == VARGLOBALE){
+				po.produire(EMPILERADG);
+				po.produire(tabSymb[tmp].info);
+			}else{
+				po.produire(EMPILERADL);
+				po.produire(tabSymb[tmp].info);
+				if(tabSymb[tmp].categorie==PARAMMOD){
+					po.produire(1);
+				}else po.produire(0);
 			}
-
 			nbparamfixRe++;
 			
 			break;
@@ -480,11 +508,10 @@ public class PtGen {
 			tmp=presentIdent(1);
 			if(tabSymb[tmp].type != tabSymb[id+2+nbparam].type){
 				UtilLex.messErr("le type de l'expression ne correspond pas au type attendu");
-			}
-			
+			}	
 			nbparamfixRe++;
-			po.produire(EMPILERADG);
-			po.produire(tmp);
+			po.produire(EMPILER);
+			po.produire(tabSymb[tmp].info);
 			break;
 		case 41:// conservation de l'indice de l'ident
 			id=presentIdent(1);
