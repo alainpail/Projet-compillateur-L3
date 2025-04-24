@@ -1,1 +1,2 @@
-La gestion des appels de procédures est incomplete donc non fonctionnelle.
+l'éditeur de lien n'est pas fonctionnelle.
+Le restes du projet semble fonctioner,il y a peut être des erreur dans certains point de génération.
