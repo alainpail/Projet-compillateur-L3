@@ -34,7 +34,7 @@ public class Edl {
 	static String nomProg;
 	static String[]fName= new String[MAXMOD+1];
 	static int []tDon, tCode;
-	static EltDef [] Dicodef;
+	static EltDef [] dicoDef;
 	static int [][] adFinale;
 	
 
@@ -159,6 +159,27 @@ public class Edl {
 		// 
 		// 
 		//
+		tDon= new int[nMod+1];
+		tCode=new int [nMod+1];
+		tDon[0]=0;
+		tCode[0]=0;
+		for (int i = 0; i<nMod; i++) {
+			tDon[i] = tDon[i - 1] + tabDesc[i - 1].getTailleGlobaux();
+			tCode[i] = tCode[i - 1] + tabDesc[i - 1].getTailleCode();	
+		}
+		nbDicDef=0;
+		dicoDef=new EltDef[MAXDEF];
+		for (int i = 0; i <= nMod; i++) {
+			for (int j = 0; j < tabDesc[i].getNbDef(); j++) {
+				for (int k = 0; k < nbDicDef; k++) {
+					if (dicoDef[k].nomProc==tabDesc[i].getDefNomProc(j)) {
+						erreur(NONFATALE, "Double définition de " + dicoDef[k].nomProc);
+					}
+				}
+
+				}
+			}
+		}
 
 		if (nbErr > 0) {
 			System.out.println("programme executable non produit");
